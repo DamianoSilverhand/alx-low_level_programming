@@ -1,4 +1,4 @@
-#include "mainn.h"
+#include "main.h"
 /**
  * wildcmp - compare two strings
  * @s1: char
