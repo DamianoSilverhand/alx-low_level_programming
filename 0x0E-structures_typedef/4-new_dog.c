@@ -1,75 +1,68 @@
 #include "dog.h"
-#include <stdio.h>
-#include <stdlib.h>
-
 /**
- * _strdup - returns a pointer to a newly allocated space in memory
- * @str: string
- * Return: pointer to newly allocated space in memory
+ * _strdup - returns a pointer to space in memory containing copy of string.
+ * @s: pointer to the string.
+ * Return: Pointer to a string stored in memory.
  */
-
-char *_strdup(char *str)
+char *_strdup(char *s)
 {
-	int length, i;
-	char *arr;
+	char *dup;
+	unsigned int i = 0;
+	unsigned int j = 0;
 
-	if (str == NULL)
-	{
+	if (s == NULL)
 		return (NULL);
-	}
+/*Get the length of the string.*/
+	while (s[i] != '\0')
+		i += 1;
+/*+1 to include the terminating character in size.*/
+	i++;
 
-	length = 0;
-	while (*(str + length) != '\0')
-	{
-		length++;
-	}
-
-	arr = (char*) malloc(length * sizeof(char) + 1);
-	if (arr == NULL)
+	dup = malloc(i * sizeof(*dup));
+	if (dup == NULL)
 		return (NULL);
-
-	for (i = 0; i < length; i++)
+	while (j < i)
 	{
-		arr[i] = str[i];
+		dup[j] = s[j];
+		j++;
 	}
-	arr[i] = '\0';
-
-	return (arr);
+	return (dup);
 }
 
-/**
- * new_dog - creates a new dog
- * @name: doggo's name
- * @age: doggo's age
- * @owner: doggo's owner
- * Return: new_dog (dog_t)
- */
 
+
+
+/**
+ *new_dog - create an instance of struct dog.
+ *@name:firt argument.
+ *@age:second argument.
+ *@owner: Third argument.
+ *Return: instance of struct.
+ */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *doggo;
-	char *doggo_name, *doggo_owner;
+	dog_t *newdog;
 
-	doggo = malloc(sizeof(dog_t));
-	if (doggo == NULL)
+	newdog = malloc(sizeof(struct dog));
+
+	if (newdog == NULL)
 		return (NULL);
-
-	doggo_name = _strdup(name);
-	if (doggo_name == NULL)
+/*Assign name element of new struct to the copy of name.*/
+	newdog->name = _strdup(name);
+	if (newdog->name == NULL)
 	{
-		free(doggo);
+		free(newdog);
 		return (NULL);
 	}
-
-	doggo_owner = _strdup(owner);
-	if (doggo_owner == NULL)
+/*Assgin owner element of new struct to the copy of ownwer.*/
+	newdog->owner = _strdup(owner);
+	if (newdog->owner == NULL)
 	{
-		free(doggo_name);
-		free(doggo);
+		free(newdog->name);
+		free(newdog);
 		return (NULL);
 	}
-	doggo->name = doggo_name;
-	doggo->age = age;
-	doggo->owner = doggo_owner;
-	return (doggo);
+	newdog->age = age;
+
+	return (newdog);
 }
